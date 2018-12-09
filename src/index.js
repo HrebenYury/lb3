@@ -135,7 +135,7 @@ function hasProperty(obj, prop) {
  */
 function getEnumProps(obj) {
   let result = [];
-  let i=0;
+  let i = 0;
   for (let prorerty in obj) {
     result[i] = prorerty;
     i++;
@@ -148,22 +148,22 @@ function getEnumProps(obj) {
  Функция должна перебрать все свойства объекта, преобразовать их имена в верхний регистра и вернуть в виде массива
  */
 function upperProps(obj) {
-    let result = [];
-    let i=0;
-    for (let property in obj) {
-        property = property.toUpperCase();
-        result[i]=property;
-        i++;
-    }
-    return result;
+  let result = [];
+  let i = 0;
+  for (let property in obj) {
+    property = property.toUpperCase();
+    result[i] = property;
+    i++;
+  }
+  return result;
 }
 
 /*
  Задача 8 *:
  Напишите аналог встроенного метода slice для работы с массивами
  */
-function slice(array, from, to) {    
-    return array = array.slice(from, to);;
+function slice(array, from, to) {
+  return (array = array.slice(from, to));
 }
 
 /* Часть 3 - работа с исключениями и отладчиком */
@@ -178,21 +178,19 @@ function slice(array, from, to) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isAllTrue(array, fn) {
-  let check;
-    if ((array.length==0) || !Array.isArray(array)){
-        throw new Error('empty array');
-    }
-    else if (typeof fn != 'function'){
-        throw new Error('fn is not a function');
-    }
-    else{
-        for(let i = 0; i < array.length; i++)
-        {
-            if(!fn(array[i]))
-                return false;
-        }
-        return true;
-    }
+  if (array == 0 || !Array.isArray(array)) {
+    throw new Error("empty array");
+  } else if (typeof fn != "function") {
+    throw new Error("fn is not a function");
+  } else {
+    var result = true;
+    array.forEach(element => {
+      if (fn(element) == false) {
+        result = false;
+      }
+    });
+    return result;
+  }
 }
 
 /*
@@ -205,20 +203,19 @@ function isAllTrue(array, fn) {
  Зарпещено использовать встроенные методы для работы с массивами
  */
 function isSomeTrue(array, fn) {
-  if (array==0 || !Array.isArray(array)){
-    throw new Error('empty array');
-}
-else if (typeof fn != 'function'){
-    throw new Error('fn is not a function');
-}
-else{
-    for(let i = 0; i < array.length; i++)
-    {
-        if(fn(array[i]))
-            return true;
-    }
-    return false;
-}
+  if (array == 0 || !Array.isArray(array)) {
+    throw new Error("empty array");
+  } else if (typeof fn != "function") {
+    throw new Error("fn is not a function");
+  } else {
+    var result = false;
+    array.forEach(element => {
+      if (fn(element) == true) {
+        result = true;
+      }
+    });
+    return result;
+  }
 }
 
 /*
@@ -231,18 +228,17 @@ else{
  */
 function returnBadArguments(fn) {
   let array = [];
-    if (typeof fn != 'function'){
-        throw new Error('fn is not a function');
-    }else if(arguments.length == 0)
-        throw new Error('array is empty');
-    for (let i = 1; i < arguments.length; i++){
-        try{
-            fn(arguments[i]);
-        } catch (err){
-            array.push(arguments[i]);
-        }
+  if (typeof fn != "function") {
+    throw new Error("fn is not a function");
+  } else if (arguments.length == 0) throw new Error("array is empty");
+  for (let i = 1; i < arguments.length; i++) {
+    try {
+      fn(arguments[i]);
+    } catch (err) {
+      array.push(arguments[i]);
     }
-    return array;
+  }
+  return array;
 }
 
 /*
@@ -259,43 +255,42 @@ function returnBadArguments(fn) {
  - number не является числом (с текстом "number is not a number")
  - какой-либо из аргументов div является нулем (с текстом "division by 0")
  */
-function calculator(number=0) {
+function calculator(number = 0) {
+  if (typeof number != "number") {
+    throw new Error("number is not a number");
+  }
 
-  if(typeof number != 'number'){
-    throw new Error('number is not a number');
-}  
-
-let object = {
-    sum: function () {
-        for (let i = 0; i < arguments.length; i++) {
-            number += arguments[i];
-        }
-        return number;
+  let object = {
+    sum: function() {
+      for (let i = 0; i < arguments.length; i++) {
+        number += arguments[i];
+      }
+      return number;
     },
-    dif: function () {
-        for (let i=0; i<arguments.length; i++){
-            number -= arguments[i];
+    dif: function() {
+      for (let i = 0; i < arguments.length; i++) {
+        number -= arguments[i];
+      }
+      return number;
+    },
+    div: function() {
+      for (let i = 0; i < arguments.length; i++) {
+        if (arguments[i] == 0) {
+          throw new Error("division by 0");
         }
-        return number;
-        },
-    div: function () {
-        for (let i=0; i<arguments.length; i++){
-            if (arguments[i]==0){
-                throw new Error('division by 0');
-            }
 
-            number /= arguments[i];
-        }
-        return number;
-        },
-    mul: function (){
-        for (let i=0; i<arguments.length; i++){
-            number *= arguments[i];
-        }
-        return number;
-        }
-};
-return object;
+        number /= arguments[i];
+      }
+      return number;
+    },
+    mul: function() {
+      for (let i = 0; i < arguments.length; i++) {
+        number *= arguments[i];
+      }
+      return number;
+    }
+  };
+  return object;
 }
 
 export {
